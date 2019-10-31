@@ -54,13 +54,15 @@ public void amountTransfer(AmountTransferVO amountTransferVO) {
 	
          
          Runnable runnable = () -> { 
+        	 
+        	 //check account number is valid or not and also amount should be greater than zero 
      		if((getAccount(amountTransferVO.getAccountFromId()).getAccountId() != null) && (getAccount(amountTransferVO.getAccountToId()).getAccountId() != null) && (amountTransferVO.getAmount().compareTo(BigDecimal.ZERO) > 0) && !(amountTransferVO.getAccountFromId().equalsIgnoreCase(amountTransferVO.getAccountToId() ))) {
     			
+     			//check sufficient amount in from account or not 
     			if ((accounts.get(amountTransferVO.getAccountFromId()).getBalance().compareTo(amountTransferVO.getAmount()) == 0 )|| (accounts.get(amountTransferVO.getAccountToId()).getBalance().compareTo(amountTransferVO.getAmount())  == 1)) { 
     				MathContext mc = new MathContext(0); // 2 precision
-    				
     				accounts.get(amountTransferVO.getAccountFromId()).setBalance(accounts.get(amountTransferVO.getAccountFromId()).getBalance().subtract(amountTransferVO.getAmount(), mc));
-    				System.out.println();
+    				//notification for the customer 
     				emailNotificationService.notifyAboutTransfer(accounts.get(amountTransferVO.getAccountFromId()), "Your account has been debited with amount"+amountTransferVO.getAmount()+".And remaining balance is "+accounts.get(amountTransferVO.getAccountFromId()).getBalance());
     				accounts.get(amountTransferVO.getAccountToId()).setBalance(accounts.get(amountTransferVO.getAccountToId()).getBalance().add(amountTransferVO.getAmount(), mc));
     	            emailNotificationService.notifyAboutTransfer(accounts.get(amountTransferVO.getAccountToId()), "Your account has been credited with amount"+amountTransferVO.getAmount()+".And remaining balance is "+accounts.get(amountTransferVO.getAccountToId()).getBalance());
@@ -74,7 +76,8 @@ public void amountTransfer(AmountTransferVO amountTransferVO) {
     	}
 
         	};
-        
+        	
+     //  ExecutorService to maintain thread safe 	 
 	 ThreadPoolService.executor.execute(runnable);
 
 	

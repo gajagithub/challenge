@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
+//POJO for to get FromAccount , TOAccount and amount for tranfer
 @Data
 public class AmountTransferVO {
 
@@ -35,6 +36,7 @@ public String getAccountFromId() {
 public String getAccountToId() {
 	return accountToId;
 }
+// json creater 
 @JsonCreator
 public AmountTransferVO(@JsonProperty("accountFromId") String accountFromId,@JsonProperty("accounToId") String accountToId,
 	    @JsonProperty("amount") BigDecimal amount) {

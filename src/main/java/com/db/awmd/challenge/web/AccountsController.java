@@ -48,7 +48,7 @@ public class AccountsController {
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
   
-  // TransferAmount Resource çontroller
+  // TransferAmount Resource controller
   @RequestMapping("/amounttransfer")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> transferAmount(@RequestBody AmountTransferVO amountTransferVO) {
