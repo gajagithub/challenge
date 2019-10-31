@@ -1,0 +1,10 @@
+  
+  Task:  Add functionality for a transfer of money between accounts
+
+  -> created a POJO (AmountTransferVO) under domain package 
+  -> created a controller service (transferAmount) with resource URL(http://localhost:18080/v1/accounts/amounttransfer) under Web package 
+  -> created a Function(amountTransfer) to AccountsService  
+  -> created a Function(amountTransfer) to AccountsRepository Interface and also implemented in AccountsRepositoryInMemory class under repository package
+  -> created a Exception handler (InvalidTransferException) under exception  package 
+  -> created a ThreadPool using ExecutorService to maintain thread safe.
+  
