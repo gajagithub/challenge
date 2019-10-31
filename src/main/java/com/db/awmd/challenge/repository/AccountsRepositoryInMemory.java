@@ -51,7 +51,7 @@ public class AccountsRepositoryInMemory implements AccountsRepository {
  // transferAmount service 
 @Override
 public void amountTransfer(AmountTransferVO amountTransferVO) {
-	
+	try {
          
          Runnable runnable = () -> { 
         	 
@@ -75,13 +75,19 @@ public void amountTransfer(AmountTransferVO amountTransferVO) {
     		throw new InvalidTransferException("Invalid account details");
     	}
 
-        	};
-        	
-     //  ExecutorService to maintain thread safe 	 
-	 ThreadPoolService.executor.execute(runnable);
+         };	
+         ThreadPoolService.executor.execute(runnable);
+   }
+catch (RuntimeException  e) {
+       
+	 ThreadPoolService.executor.shutdown();
+      
+   }
+}   	
+    
+	 
 
 	
 	
 }
 
-}
